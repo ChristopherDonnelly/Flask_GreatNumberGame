@@ -1,0 +1,15 @@
+<html>
+    <head>
+       <title>Form Test Index</title>
+    </head>
+    <body>
+        <h1>Counter</h1>
+        <h3>{{ session['counter'] }} times.</h3>
+        <form action='/countBy2' method='post'>
+            <input type='submit' value='Count by 2'>
+        </form>
+        <form action='/reset' method='post'>
+            <input type='submit' value='Reset'>
+        </form>
+    </body>
+</html>
