@@ -1,15 +1,35 @@
 <html>
     <head>
-       <title>Form Test Index</title>
+       <title>Great Number Game!</title>
+       <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     </head>
     <body>
-        <h1>Counter</h1>
-        <h3>{{ session['counter'] }} times.</h3>
-        <form action='/countBy2' method='post'>
-            <input type='submit' value='Count by 2'>
-        </form>
-        <form action='/reset' method='post'>
-            <input type='submit' value='Reset'>
-        </form>
+        <div id="wrapper">
+            <h1>Welcome to the Great Number Game!</h1>
+            <h3>I am thinking of a number between 1 and 100.</h3>
+            <p>Take a guess! The lower the score the better.</p>
+            <p>Score: {{session['count']}}</p>
+            <div id="resultsLayer" style="background-color:{{session['color']}}; border-color: {{session['border']}}">
+                {% if session['guess'] == 'none': %}
+                    <p></p>
+                {% elif session['randomNum'] | int > session['guess'] | int: %}
+                    <p>Too Low!</p>
+                {% elif session['randomNum'] | int < session['guess'] | int: %}
+                    <p>Too High!</p>
+                {% elif session['randomNum'] | int == session['guess'] | int: %}
+                    <p>{{session['randomNum']}} was the number!</p>
+                {% endif %}
+            </div>
+            {% if session['randomNum'] | int == session['guess'] | int: %}
+                <form action='/reset' method='post'>
+                    <input type='submit' value='Play Again'>
+                </form>
+            {% else %}
+                <form action='/guess' method='post' autocomplete="false">
+                    <input type="text" name="answer" tabindex="0" placeholder="Enter Guess" />
+                    <input type='submit' value='Guess' />
+                </form>
+            {% endif %}
+        </div>
     </body>
 </html>
